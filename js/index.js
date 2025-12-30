@@ -1,68 +1,76 @@
-import { projects, boardToProject, sanitizeInput } from './Superbase.js'
+import { projects, sanitizeInput } from './Superbase.js'
 
+const popularBoardsDiv = document.getElementById('popularBoards')
+const popularThreadsDiv = document.getElementById('popularThreads')
+const latestPostsDiv = document.getElementById('latestPosts')
+
+// ------------------ 人気板取得 ------------------
 async function loadPopularBoards(){
-  const div = document.getElementById('popularBoards')
-  div.innerHTML = ''
-  for(let supabase of projects){
-    const { data: boards } = await supabase.from('boards').select('*')
+  popularBoardsDiv.innerHTML = ''
+  for(const supabase of projects){
+    const { data: boards } = await supabase.from('boards').select('*').limit(5).order('id',{ascending:false})
     boards.forEach(board=>{
-      const card = document.createElement('div')
-      card.textContent = sanitizeInput(board.name)
-      card.onclick = () => window.location = `threads.html?boardId=${board.id}&boardName=${encodeURIComponent(board.name)}`
-      div.appendChild(card)
+      const div = document.createElement('div')
+      div.textContent = sanitizeInput(board.name)
+      div.style.cursor='pointer'
+      div.onclick = ()=>window.location=`threads.html?boardId=${board.id}&boardName=${encodeURIComponent(board.name)}`
+      popularBoardsDiv.appendChild(div)
     })
   }
 }
 
+// ------------------ 人気スレ取得 ------------------
 async function loadPopularThreads(){
-  const div = document.getElementById('popularThreads')
-  div.innerHTML = ''
-  let allThreads = []
-  for(let supabase of projects){
-    const { data: threads } = await supabase.from('threads').select('*')
-    for(let thread of threads){
-      const { data: posts } = await supabase.from('posts').select('id').eq('thread_id', thread.id)
-      thread.popularity = posts.length
-    }
-    allThreads = allThreads.concat(threads)
+  popularThreadsDiv.innerHTML = ''
+  for(const supabase of projects){
+    const { data: threads } = await supabase.from('threads').select('*').limit(5).order('id',{ascending:false})
+    threads.forEach(thread=>{
+      const div = document.createElement('div')
+      div.textContent = sanitizeInput(thread.title)
+      div.style.cursor='pointer'
+      div.onclick = ()=>window.location=`posts.html?boardId=${thread.board_id}&threadId=${thread.id}&threadName=${encodeURIComponent(thread.title)}`
+      popularThreadsDiv.appendChild(div)
+    })
   }
-  allThreads.sort((a,b) => b.popularity - a.popularity)
-  allThreads.slice(0,10).forEach(thread=>{
-    const tdiv = document.createElement('div')
-    tdiv.innerHTML = `[${thread.id}] ${sanitizeInput(thread.title)} (${thread.popularity}レス)`
-    tdiv.onclick = () => window.location = `posts.html?boardId=${thread.board_id}&threadId=${thread.id}&threadName=${encodeURIComponent(thread.title)}`
-    div.appendChild(tdiv)
-  })
 }
 
+// ------------------ 最新投稿取得 ------------------
 async function loadLatestPosts(){
-  const div = document.getElementById('latestPosts')
-  div.innerHTML = ''
-  let allPosts = []
-  for(let supabase of projects){
-    const { data: posts } = await supabase.from('posts').select('*').order('id',{ascending:false}).limit(10)
-    allPosts = allPosts.concat(posts)
+  latestPostsDiv.innerHTML = ''
+  for(const supabase of projects){
+    const { data: posts } = await supabase.from('posts').select('*').limit(5).order('created_at',{ascending:false})
+    posts.forEach(post=>{
+      const div = document.createElement('div')
+      div.innerHTML = `<b>${sanitizeInput(post.name||'名無し')}</b>: ${sanitizeInput(post.content)}`
+      latestPostsDiv.appendChild(div)
+    })
   }
-  allPosts.sort((a,b)=>b.id-a.id)
-  allPosts.forEach(post=>{
-    const pdiv = document.createElement('div')
-    pdiv.innerHTML = `${sanitizeInput(post.name||'名無し')}: ${sanitizeInput(post.content)}`
-    pdiv.style.cursor = 'pointer'
-    pdiv.onclick = ()=> window.location=`posts.html?boardId=${post.board_id}&threadId=${post.thread_id}&threadName=人気スレッド`
-    div.appendChild(pdiv)
-  })
 }
 
+// ------------------ 利用規約表示 ------------------
+function loadTerms(){
+  // 利用規約は index.html に固定HTMLなので不要
+}
+
+// ------------------ リアルタイム更新 ------------------
 function setupRealtime(){
-  for(let supabase of projects){
-    supabase.from('posts').on('INSERT',()=>loadLatestPosts()).subscribe()
-    supabase.from('threads').on('INSERT',()=>loadPopularThreads()).subscribe()
+  for(const supabase of projects){
+    supabase
+      .from('threads')
+      .on('INSERT', payload => loadPopularThreads())
+      .subscribe()
+    supabase
+      .from('posts')
+      .on('INSERT', payload => { loadLatestPosts(); loadPopularThreads(); })
+      .subscribe()
   }
 }
 
+// ------------------ 初期読み込み ------------------
 window.onload = ()=>{
   loadPopularBoards()
   loadPopularThreads()
   loadLatestPosts()
   setupRealtime()
+  loadTerms()
 }
