@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>管理者コンソール</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>管理者コンソール</h1>
+  <button id="logoutBtn">ログアウト</button>
+</header>
+<main>
+  <section>
+    <h2>スレッド管理</h2>
+    <div id="threadsAdminList"></div>
+  </section>
+  <section>
+    <h2>レス管理</h2>
+    <div id="postsAdminList"></div>
+  </section>
+  <section>
+    <h2>操作ログ</h2>
+    <div id="adminLogsList"></div>
+  </section>
+</main>
+<script type="module" src="js/Superbase.js"></script>
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>
