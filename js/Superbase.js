@@ -43,3 +43,11 @@ export const adminSupabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 export function sanitizeInput(str){
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
 }
+export function debugLog(msg) {
+  const el = document.getElementById("debug");
+  if (!el) return;
+  const line = document.createElement("div");
+  line.textContent =
+    "[" + new Date().toLocaleTimeString() + "] " + msg;
+  el.appendChild(line);
+}
