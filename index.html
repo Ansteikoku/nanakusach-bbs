@@ -1,53 +1,73 @@
 <!DOCTYPE html>
-<div id="debug" style="
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  max-height:40%;
-  overflow:auto;
-  background:#000;
-  color:#0f0;
-  font-size:12px;
-  z-index:9999;
-  padding:6px;
-">
-  <b>DEBUG</b><br>
-</div>
-
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>掲示板ホーム</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://your-supabase-bucket.supabase.co; script-src 'self'; style-src 'self' 'unsafe-inline';">
-<link rel="stylesheet" href="css/style.css">
-<style>
-  #terms { border:1px solid #ccc; padding:10px; max-height:250px; overflow-y:scroll; margin-top:20px; background-color:#f9f9f9; }
-</style>
+  <meta charset="UTF-8" />
+  <title>掲示板ホーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+    header {
+      padding: 10px;
+      background: #222;
+      color: #fff;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    header a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* DEBUG表示 */
+    #debug {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      max-height: 40%;
+      overflow: auto;
+      background: #000;
+      color: #0f0;
+      font-size: 12px;
+      z-index: 9999;
+      padding: 6px;
+      box-sizing: border-box;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1>掲示板ホーム</h1>
-</header>
-<main>
-  <section id="popularBoardsSection"><h2>人気板</h2><div id="popularBoards"></div></section>
-  <section id="popularThreadsSection"><h2>人気スレッド</h2><div id="popularThreads"></div></section>
-  <section id="latestPostsSection"><h2>最新投稿</h2><div id="latestPosts"></div></section>
-  <section id="terms">
-    <h2>利用規約</h2>
-    <div id="termsContent">
-      <p>第1条（適用範囲）当掲示板の利用に関しては本規約が適用されます。</p>
-      <p>第2条（禁止事項）公序良俗違反、誹謗中傷、個人情報侵害、著作権侵害、法令違反は不可。</p>
-      <p>第3条（投稿責任）投稿者が責任を持ち、管理者は責任を負いません。</p>
-      <p>第4条（削除・編集）管理者は規約違反を削除・編集できます。</p>
-      <p>第5条（利用停止）規約違反者は利用停止可能です。</p>
-      <p>第6条（免責）損害について管理者は責任を負いません。</p>
-      <p>第7条（規約変更）予告なく変更されます。</p>
-      <p>第8条（準拠法）日本法準拠、裁判管轄は管理者所在地。</p>
-    </div>
-  </section>
-</main>
-<script type="module" src="js/Superbase.js"></script>
-<script type="module" src="js/index.js"></script>
+
+  <!-- ヘッダー -->
+  <header>
+    <a href="index.html">ホーム</a>
+    <a href="board.html">板一覧</a>
+    <a href="search.html">検索</a>
+    <a href="https://formspree.io/" target="_blank">お問い合わせ</a>
+  </header>
+
+  <!-- メイン -->
+  <main>
+    <h1>掲示板</h1>
+    <p>人気の板・スレッドを表示予定</p>
+  </main>
+
+  <!-- DEBUG表示エリア -->
+  <div id="debug">
+    <b>DEBUG</b><br>
+  </div>
+
+  <!-- HTML直書きテスト（これが出ればHTMLは正常） -->
+  <script>
+    document.getElementById("debug").innerHTML += "INLINE SCRIPT OK<br>";
+  </script>
+
+  <!-- ★ 重要：必ず module で読み込む -->
+  <script type="module" src="./index.js"></script>
+
 </body>
 </html>
