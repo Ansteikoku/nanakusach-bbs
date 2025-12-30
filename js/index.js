@@ -1,4 +1,7 @@
-console.log("index.js loaded");
+import { projects, debugLog } from "./Superbase.js";
+
+debugLog("index.js loaded");
+debugLog("projects length = " + projects.length);
 import { projects, sanitizeInput } from './Superbase.js'
 
 const popularBoardsDiv = document.getElementById('popularBoards')
