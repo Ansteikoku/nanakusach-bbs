@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>スレッド一覧</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1 id="boardName">板</h1>
+  <a href="board.html">板一覧へ戻る</a>
+</header>
+<main>
+  <section>
+    <h2>スレッド一覧</h2>
+    <div id="threadsList"></div>
+    <button id="createThreadBtn">新規スレ作成</button>
+  </section>
+  <section id="newThreadSection" style="display:none;">
+    <input type="text" id="newThreadTitle" placeholder="スレッドタイトル">
+    <textarea id="newThreadContent" placeholder="本文"></textarea>
+    <input type="text" id="newThreadName" placeholder="名前（任意）">
+    <button id="submitThreadBtn">作成</button>
+    <button id="cancelThreadBtn">キャンセル</button>
+  </section>
+</main>
+<script type="module" src="js/Superbase.js"></script>
+<script type="module" src="js/threads.js"></script>
+</body>
+</html>
