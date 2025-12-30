@@ -1,3 +1,4 @@
+console.log("index.js loaded");
 import { projects, sanitizeInput } from './Superbase.js'
 
 const popularBoardsDiv = document.getElementById('popularBoards')
