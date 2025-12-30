@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>掲示板ホーム</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://your-supabase-bucket.supabase.co; script-src 'self'; style-src 'self' 'unsafe-inline';">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  #terms {
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-height: 250px;
+    overflow-y: scroll;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>掲示板ホーム</h1>
+</header>
+
+<main>
+  <section id="popularBoardsSection">
+    <h2>人気板</h2>
+    <div id="popularBoards"></div>
+  </section>
+
+  <section id="popularThreadsSection">
+    <h2>人気スレッド</h2>
+    <div id="popularThreads"></div>
+  </section>
+
+  <section id="latestPostsSection">
+    <h2>最新投稿</h2>
+    <div id="latestPosts"></div>
+  </section>
+
+  <!-- 利用規約セクション -->
+  <section id="terms">
+    <h2>利用規約</h2>
+    <div id="termsContent">
+      <p>第1条（適用範囲）<br>
+      この掲示板（以下「当掲示板」）の利用に関しては、本規約が適用されます。当掲示板を利用するすべての方は、本規約に同意したものとみなします。</p>
+
+      <p>第2条（投稿内容の禁止事項）<br>
+      以下の投稿は禁止します：<br>
+      1. 公序良俗に反する内容<br>
+      2. 他者を誹謗中傷する内容<br>
+      3. 個人情報やプライバシーの侵害<br>
+      4. 著作権・知的財産権を侵害する内容<br>
+      5. 法令に違反する行為を助長する内容</p>
+
+      <p>第3条（投稿内容の責任）<br>
+      投稿者は、自己の責任において投稿するものとし、当掲示板管理者は投稿内容について一切の責任を負いません。</p>
+
+      <p>第4条（管理者による削除・編集）<br>
+      管理者は、規約違反や不適切な投稿を発見した場合、事前通知なく削除または編集できるものとします。</p>
+
+      <p>第5条（利用停止）<br>
+      規約違反や迷惑行為があった場合、管理者は当掲示板の利用停止・アクセス制限を行う場合があります。</p>
+
+      <p>第6条（免責事項）<br>
+      当掲示板の利用により発生した損害について、管理者は一切の責任を負いません。</p>
+
+      <p>第7条（規約の変更）<br>
+      本規約は予告なく変更されることがあります。変更後の規約は掲示板上で告知された時点から効力を持ちます。</p>
+
+      <p>第8条（準拠法・裁判管轄）<br>
+      本規約は日本法に準拠します。掲示板利用に関して生じる紛争については、管理者所在地を管轄する裁判所を専属的合意管轄とします。</p>
+    </div>
+  </section>
+
+</main>
+
+<script type="module" src="js/Superbase.js"></script>
+<script type="module" src="js/index.js"></script>
+</body>
+</html>
